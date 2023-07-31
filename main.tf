@@ -43,6 +43,7 @@ resource "google_compute_instance" "compute_instance" {
       image = var.source_image
     }
     kms_key_self_link = var.disk_encryption_key
+    #checkov:skip=CKV_GCP_39:Shielded VM enablement is unnecessary
   }
 
   zone = element(var.zones, count.index)
@@ -53,6 +54,7 @@ resource "google_compute_instance" "compute_instance" {
     subnetwork_project = var.subnetwork_project
     network_ip         = length(var.network_ip) > 0 ? try(var.network_ip[count.index], var.network_ip) : null
     dynamic "access_config" {
+      #checkov:skip=CKV_GCP_40:VMs have public IP addresses
       for_each = var.access_config
       content {
         nat_ip       = try(access_config.value.nat_ip[count.index], access_config.value.nat_ip)
@@ -83,6 +85,7 @@ resource "google_compute_instance" "compute_instance" {
   labels = var.labels
 
   metadata = merge(var.metadata, {
+    #checkov:skip=CKV_GCP_32:Project-wide SSH keys are necessary 
     windows-startup-script-ps1 = local.startup_scripts == null ? null : (var.windows == true ? join("\n", local.startup_scripts) : null)
     startup-script             = local.startup_scripts == null ? null : (var.windows == false ? join("\n", local.startup_scripts) : null)
   })
