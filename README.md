@@ -7,6 +7,7 @@ This GCP Virtual Machine module allows you to easily configure and deploy any ne
 FedRAMP Compliance: High
 
 ### Usage
+
 ```hcl
 module "linux-bastion" {
   source = "github.com/Coalfire-CF/ACE-GCP-VM"
@@ -45,6 +46,7 @@ module "linux-bastion" {
   tags = ["ext-ssh"]
 }
 ```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
