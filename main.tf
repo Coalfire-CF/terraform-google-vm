@@ -102,8 +102,9 @@ resource "google_compute_instance" "compute_instance" {
 
   lifecycle {
     ignore_changes = [
-      # do not clear out any windows passwords
+      # do not clear out any windows passwords and ssh keys
       metadata["windows-keys"],
+      metadata["ssh-keys"],
       # do not recreate instance when newer image available
       boot_disk.0.initialize_params.0.image,
       # do not touch resource policies
