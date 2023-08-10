@@ -1,8 +1,8 @@
 locals {
   startup_scripts = var.startup_scripts == null ? null : [
     for script in var.startup_scripts : templatefile(
-      "${path.module}/../../shellscripts/${script["path"]["folder_name"]}/${script["path"]["file_name"]}",
-      try(script["vars"], {})
+      script.path,
+      try(script.vars, {})
     )
   ]
 }
