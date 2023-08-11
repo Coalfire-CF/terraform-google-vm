@@ -92,7 +92,10 @@ variable "metadata" {
 }
 
 variable "startup_scripts" {
-  type        = list(map(any))
+  type = list(object({
+    path = string,
+    vars = map(string)
+  }))
   description = "User startup scripts to run when instances spin up"
   default     = null
 }
