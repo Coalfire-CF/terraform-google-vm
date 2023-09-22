@@ -10,7 +10,7 @@ FedRAMP Compliance: High
 
 ```hcl
 module "linux-bastion" {
-  source = "github.com/Coalfire-CF/ACE-GCP-VM"
+  source = "github.com/Coalfire-CF/terraform-gcp-vm"
 
   project_id = data.terraform_remote_state.bootstrap.outputs.management_project_id
 
