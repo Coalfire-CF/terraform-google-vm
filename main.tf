@@ -1,10 +1,10 @@
 locals {
-  startup_scripts = var.startup_scripts == null ? null : [
+  startup_scripts = var.startup_scripts == null ? null : join("\n", [
     for script in var.startup_scripts : templatefile(
       script.path,
       try(script.vars, {})
     )
-  ]
+  ])
 }
 
 /*************************************************
@@ -25,7 +25,7 @@ resource "google_compute_disk_resource_policy_attachment" "policy_attachment" {
 *************************************************/
 
 locals {
-  domain_name = var.domain_name == null ? "" : ".${var.domain_name}"
+  domain_name = ".${var.domain_name}"
 }
 
 resource "google_compute_instance" "compute_instance" {
@@ -33,7 +33,7 @@ resource "google_compute_instance" "compute_instance" {
   project = var.project_id
 
   name     = var.num_instances == 1 ? var.name : "${var.name}${count.index + 1}"
-  hostname = var.num_instances == 1 ? "${var.name}${local.domain_name}" : "${var.name}${count.index + 1}${local.domain_name}"
+  hostname = var.domain_name == "" ? null : var.num_instances == 1 ? "${var.name}${local.domain_name}" : "${var.name}${count.index + 1}${local.domain_name}"
 
   machine_type     = var.machine_type
   min_cpu_platform = var.min_cpu_platform
@@ -90,8 +90,8 @@ resource "google_compute_instance" "compute_instance" {
 
   metadata = merge(var.metadata, {
     #checkov:skip=CKV_GCP_32:Project-wide SSH keys are necessary 
-    windows-startup-script-ps1 = local.startup_scripts == null ? null : (var.windows == true ? join("\n", local.startup_scripts) : null)
-    startup-script             = local.startup_scripts == null ? null : (var.windows == false ? join("\n", local.startup_scripts) : null)
+    windows-startup-script-ps1 = (var.startup_scripts != null && strcontains(lower(var.source_image), "win") == true) ? local.startup_scripts : null
+    startup-script             = (var.startup_scripts != null && strcontains(lower(var.source_image), "win") == false) ? local.startup_scripts : null
   })
 
   dynamic "service_account" {
