@@ -104,7 +104,7 @@ No modules.
 | <a name="input_network_ip"></a> [network\_ip](#input\_network\_ip) | Private IP address to assign to the instance if desired. | `any` | `""` | no |
 | <a name="input_num_instances"></a> [num\_instances](#input\_num\_instances) | Number of instances to create. | `number` | `1` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID | `string` | `null` | no |
-| <a name="input_service_account"></a> [service\_account](#input\_service\_account) | Service account to attach to the instance. See https://www.terraform.io/docs/providers/google/r/compute_instance_template.html#service_account. | <pre>object({<br>    email  = string<br>    scopes = set(string)<br>  })</pre> | n/a | yes |
+| <a name="input_service_account"></a> [service\_account](#input\_service\_account) | Service account to attach to the instance. See https://www.terraform.io/docs/providers/google/r/compute_instance_template.html#service_account. | <pre>object({<br>    email  = string<br>    scopes = optional(set(string), ["cloud-platform"])<br>  })</pre> | n/a | yes |
 | <a name="input_snapshot_schedule"></a> [snapshot\_schedule](#input\_snapshot\_schedule) | Name of snapshot schedule | `string` | `null` | no |
 | <a name="input_source_image"></a> [source\_image](#input\_source\_image) | Source disk image. If neither source\_image nor source\_image\_family is specified, defaults to the latest public CentOS image. | `string` | `""` | no |
 | <a name="input_startup_scripts"></a> [startup\_scripts](#input\_startup\_scripts) | User startup scripts to run when instances spin up | <pre>list(object({<br>    path = string,<br>    vars = optional(map(string), {})<br>  }))</pre> | `null` | no |
