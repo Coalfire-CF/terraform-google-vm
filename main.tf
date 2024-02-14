@@ -24,12 +24,16 @@ resource "google_compute_disk_resource_policy_attachment" "policy_attachment" {
  Instances
 *************************************************/
 
+locals {
+  domain_name = var.domain_name == null ? "" : ".${var.domain_name}"
+}
+
 resource "google_compute_instance" "compute_instance" {
   count   = var.num_instances
   project = var.project_id
 
   name     = var.num_instances == 1 ? var.name : "${var.name}${count.index + 1}"
-  hostname = var.num_instances == 1 ? "${var.name}.${var.domain_name}" : "${var.name}.${count.index + 1}${var.domain_name}"
+  hostname = var.num_instances == 1 ? "${var.name}${local.domain_name}" : "${var.name}${count.index + 1}${local.domain_name}"
 
   machine_type     = var.machine_type
   min_cpu_platform = var.min_cpu_platform
