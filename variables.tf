@@ -42,7 +42,7 @@ variable "name" {
 variable "domain_name" {
   type        = string
   description = "Domain name of instances, prefixed by '.'"
-  default     = null
+  default     = ""
 }
 
 variable "deletion_protection" {
@@ -63,20 +63,14 @@ variable "labels" {
   default     = {}
 }
 
-variable "windows" {
-  type        = bool
-  description = "True if Windows VM"
-  default     = false
-}
-
 ###########################
 # Public IP
 ###########################
 variable "access_config" {
   description = "Access configurations, i.e. IPs via which the VM instance can be accessed via the Internet."
   type = list(object({
-    nat_ip       = any
-    network_tier = string
+    nat_ip       = optional(any, null)
+    network_tier = optional(string, "PREMIUM")
   }))
   default = []
 }
@@ -94,7 +88,7 @@ variable "metadata" {
 variable "startup_scripts" {
   type = list(object({
     path = string,
-    vars = map(string)
+    vars = optional(map(string), {})
   }))
   description = "User startup scripts to run when instances spin up"
   default     = null
@@ -107,7 +101,7 @@ variable "startup_scripts" {
 variable "service_account" {
   type = object({
     email  = string
-    scopes = set(string)
+    scopes = optional(set(string), ["cloud-platform"])
   })
   description = "Service account to attach to the instance. See https://www.terraform.io/docs/providers/google/r/compute_instance_template.html#service_account."
 }
