@@ -6,7 +6,17 @@ This module is used to create a resource policy for scheduling persistent disk s
 
 ## Usage
 
+The below example creates a daily snapshot schedule with a default max retention time of 14 days.
+
 ```hcl
+module "snapshot_schedule" {
+  source = "github.com/Coalfire-CF/terraform-google-vm//modules/snapshot"
+
+  project_id = "your-project-id"
+  region     = "your-region"
+  name       = "daily-snapshot"
+}
+
 ```
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
