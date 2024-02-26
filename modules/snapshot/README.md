@@ -17,7 +17,15 @@ module "snapshot_schedule" {
   name       = "daily-snapshot"
 }
 
+module "linux_bastion" {
+  ...
+
+  snapshot_schedule = module.snapshot_schedule.self_link
+}
 ```
+
+To assign the snapshot schedule to a VM, use the `self_link` output from this module and pass that into the `snapshot_schedule` variable of the VM module.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

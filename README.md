@@ -16,7 +16,7 @@ data "google_compute_image" "rhel_9" {
   filter  = "name=rhel-9-v20231010"
 }
 
-module "linux-bastion" {
+module "linux_bastion" {
   source = "github.com/Coalfire-CF/terraform-google-vm"
 
   project_id = data.terraform_remote_state.bootstrap.outputs.management_project_id
