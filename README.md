@@ -1,11 +1,10 @@
 ![Coalfire](coalfire_logo.png)
 
-
-# GCP VM Terraform Module
+# Google Cloud VM Terraform Module
 
 ## Description
 
-This GCP Virtual Machine module allows you to easily configure and deploy any needed instances. This module will create the virtual machine as well as setup a snapshot schedule. Coalfire has tested this module with Terraform version 1.5.0 and the Hashicorp Google provider versions 4.70 - 5.0.
+This Google Cloud Virtual Machine module allows you to easily configure and deploy any needed instances. This module will create the virtual machine as well as setup a snapshot schedule. Coalfire has tested this module with Terraform version 1.5.0 and the Hashicorp Google provider versions 4.70 - 5.0.
 
 FedRAMP Compliance: High
 
@@ -17,8 +16,8 @@ data "google_compute_image" "rhel_9" {
   filter  = "name=rhel-9-v20231010"
 }
 
-module "linux-bastion" {
-  source = "github.com/Coalfire-CF/terraform-gcp-vm"
+module "linux_bastion" {
+  source = "github.com/Coalfire-CF/terraform-google-vm"
 
   project_id = data.terraform_remote_state.bootstrap.outputs.management_project_id
 
