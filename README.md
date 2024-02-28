@@ -116,6 +116,17 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_id"></a> [id](#output\_id) | ID of instance. |
+| <a name="output_image"></a> [image](#output\_image) | Self-link of the image. |
+| <a name="output_instance_id"></a> [instance\_id](#output\_instance\_id) | Server-assigned unique identifier of this instance. |
 | <a name="output_instances_details"></a> [instances\_details](#output\_instances\_details) | List of all details for compute instances |
-| <a name="output_instances_self_links"></a> [instances\_self\_links](#output\_instances\_self\_links) | List of self-links for compute instances |
+| <a name="output_labels"></a> [labels](#output\_labels) | Labels that will be associated with the instance. |
+| <a name="output_name"></a> [name](#output\_name) | Name of instance. |
+| <a name="output_private_ip"></a> [private\_ip](#output\_private\_ip) | Private IP address assigned to the instance. |
+| <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | Public IP address assigned to the instance. |
+| <a name="output_self_link"></a> [self\_link](#output\_self\_link) | Self-link of the instance. |
+| <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Service account attached to the instance. |
+| <a name="output_status"></a> [status](#output\_status) | Current status of the instance. |
+| <a name="output_tags"></a> [tags](#output\_tags) | Tags that will be associated with the instance. |
+| <a name="output_zone"></a> [zone](#output\_zone) | Zone that the instance is located in. |
 <!-- END_TF_DOCS -->
