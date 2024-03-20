@@ -1,6 +1,6 @@
 resource "google_os_config_patch_deployment" "yum_patch" {
+  project = var.project_id
   patch_deployment_id = var.patch_deployment_id
-
   instance_filter {
     group_labels {
       labels = {

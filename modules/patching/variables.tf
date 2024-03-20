@@ -1,3 +1,8 @@
+variable "project_id" {
+  type        = string
+  description = "The project ID where the resources will be created."
+}
+
 variable "patch_deployment_id" {
   type = string
   description = "A name for the patch deployment in the project."
@@ -40,7 +45,7 @@ variable "minimal" {
 variable "excludes" {
   type = list(string)
   description = "List of packages to exclude from update. These packages will be excluded."
-  default = [ "" ]
+  default = [""]
 }
 
 variable "time_zone" {
