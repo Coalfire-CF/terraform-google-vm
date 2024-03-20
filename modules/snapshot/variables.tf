@@ -64,5 +64,6 @@ variable "storage_locations" {
 variable "guest_flush" {
   type        = bool
   description = "Whether to perform a 'guest aware' snapshot."
-  default     = true
+  default     = false
 }
+
