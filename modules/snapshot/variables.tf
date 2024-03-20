@@ -63,7 +63,7 @@ variable "storage_locations" {
 
 variable "guest_flush" {
   type        = bool
-  description = "Whether to perform a 'guest aware' snapshot."
+  description = "Whether to perform a 'guest aware' snapshot only for Windows VMs. VSS snapshots work only on Windows instances with image version v20160810 and newer."
   default     = false
 }
 
