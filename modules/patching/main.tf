@@ -55,4 +55,8 @@ resource "google_os_config_patch_deployment" "yum_patch" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [recurring_schedule]
+  }
+
 }
