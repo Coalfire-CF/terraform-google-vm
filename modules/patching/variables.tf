@@ -45,7 +45,7 @@ variable "minimal" {
 variable "excludes" {
   type = list(string)
   description = "List of packages to exclude from update. These packages will be excluded."
-  default = [""]
+  default = null
 }
 
 variable "time_zone" {
