@@ -1,3 +1,26 @@
+# Google Cloud VM OS Patching
+
+## Description
+
+This module is used to create a OS Patching Schedule for VMs based on a label for yum specific OS updates.
+
+## Usage
+
+The below example creates a OS Patching Schedule targeting RHEL8 VMs.
+
+```hcl
+module "rhel8_os_patching" {
+  source = "github.com/Coalfire-CF/terraform-google-vm?ref=vm-patch-feature//modules/patching"
+  project_id = "your-project-id"
+
+  patch_deployment_id = "rhel8-patching-schedule"
+  os_family = "rhel8"
+  zones = ["us-central1-a", "us-central1-b", "us-central1-c"]
+  day_of_week = "WEDNESDAY"
+
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
