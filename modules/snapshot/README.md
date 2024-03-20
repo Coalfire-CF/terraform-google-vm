@@ -52,7 +52,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_days_in_cycle"></a> [days\_in\_cycle](#input\_days\_in\_cycle) | Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle. Days in cycle for snapshot schedule policy must be 1. | `number` | `1` | no |
-| <a name="input_guest_flush"></a> [guest\_flush](#input\_guest\_flush) | Whether to perform a 'guest aware' snapshot. | `bool` | `true` | no |
+| <a name="input_guest_flush"></a> [guest\_flush](#input\_guest\_flush) | Whether to perform a 'guest aware' snapshot only for Windows VMs. VSS snapshots work only on Windows instances with image version v20160810 and newer. | `bool` | `false` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels, provided as a map | `map(string)` | `null` | no |
 | <a name="input_max_retention_days"></a> [max\_retention\_days](#input\_max\_retention\_days) | Maximum age of the snapshot that is allowed to be kept. | `number` | `14` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the resource policy to create. | `string` | n/a | yes |
