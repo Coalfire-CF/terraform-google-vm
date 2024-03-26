@@ -19,16 +19,6 @@ resource "google_os_config_patch_deployment" "yum_patch" {
       minimal = var.minimal
       excludes = var.excludes
     }
-
-    # post_step {
-    #   linux_exec_step_config {
-    #     gcs_object {
-    #       bucket = "my-patch-scripts"
-    #       generation_number = "1523477886880" 
-    #       object = "linux/post_patch_script"
-    #     }
-    #   }
-    # }
   }
 
   recurring_schedule {
