@@ -10,7 +10,7 @@ The below example creates a OS Patching Schedule targeting RHEL8 VMs.
 
 ```hcl
 module "rhel8_os_patching" {
-  source = "github.com/Coalfire-CF/terraform-google-vm?ref=vm-patch-feature//modules/patching"
+  source = "github.com/Coalfire-CF/terraform-google-vm//modules/patching"
   project_id = "your-project-id"
 
   patch_deployment_id = "rhel8-patching-schedule"
