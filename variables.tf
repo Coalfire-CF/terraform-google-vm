@@ -183,13 +183,13 @@ variable "additional_networks" {
   description = "Additional network interface details for GCE, if any."
   default     = []
   type = list(object({
-    network            = string
-    subnetwork         = string
-    subnetwork_project = string
-    network_ip         = any
-    access_config = list(object({
+    network            = optional(string, null)
+    subnetwork         = optional(string, null)
+    subnetwork_project = optional(string, null)
+    network_ip         = optional(any, null)
+    access_config = optional(list(object({
       nat_ip       = string
       network_tier = string
-    }))
+    })), [])
   }))
 }

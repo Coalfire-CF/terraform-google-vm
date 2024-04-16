@@ -73,7 +73,7 @@ resource "google_compute_instance" "compute_instance" {
       network            = network_interface.value.network
       subnetwork         = network_interface.value.subnetwork
       subnetwork_project = network_interface.value.subnetwork_project
-      network_ip         = length(network_interface.value.network_ip) > 0 ? try(network_interface.value.network_ip[count.index], network_interface.value.network_ip) : null
+      network_ip         = network_interface.value.network_ip
       dynamic "access_config" {
         for_each = network_interface.value.access_config
         content {
