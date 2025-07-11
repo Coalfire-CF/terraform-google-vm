@@ -64,7 +64,7 @@ variable "yum_security" {
 variable "yum_minimal" {
   description = "Install minimal updates"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "yum_excludes" {
@@ -212,7 +212,7 @@ variable "nanos" {
 variable "day_of_week" {
   description = "Day of the week (MONDAY, TUESDAY, etc.)"
   type        = string
-  default     = "SUNDAY"
+  default     = "WEDNESDAY"
 }
 
 variable "week_ordinal" {
