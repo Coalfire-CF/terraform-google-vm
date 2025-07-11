@@ -9,88 +9,227 @@ variable "patch_deployment_id" {
 }
 
 variable "os_family" {
-  type = string
-  description = "OS family of the VMs deployed for the patch schedule."
+  description = "Operating system family (windows, rhel, centos, ubuntu, debian, suse)"
+  type        = string
+  validation {
+    condition = contains(["windows", "windows2022", "rhel", "rhel8", "rhel9", "centos", "ubuntu", "debian", "suse"], var.os_family)
+    error_message = "OS family must be one of: windows, windows2022, rhel, rhel8, rhel9, centos, ubuntu, debian, suse."
+  }
 }
 
 variable "zones" {
-  type = list(string)
-  description = "Targets VM instances in ANY of these zones."
+  description = "List of zones to target"
+  type        = list(string)
+  default     = []
 }
 
 variable "mig_instances_allowed" {
-  type = bool
-  description = "Allows the patch job to run on Managed instance groups (MIGs)."
-  default = true
+  description = "Allow patching of MIG instances"
+  type        = bool
+  default     = true
 }
 
 variable "reboot_config" {
-  type = string
-  description = "Post-patch reboot settings. Possible values are: DEFAULT, ALWAYS, NEVER."
-  default = "DEFAULT"
+  description = "Reboot configuration (DEFAULT, ALWAYS, NEVER)"
+  type        = string
+  default     = "DEFAULT"
 }
 
-variable "security" {
-  type = bool
-  description = "Adds the --security flag to yum update. Not supported on all platforms."
-  default = true
+# Windows-specific variables
+variable "windows_classifications" {
+  description = "Windows update classifications"
+  type        = list(string)
+  default     = ["CRITICAL", "SECURITY", "UPDATES"]
 }
 
-variable "minimal" {
-  type = bool
-  description = "Will cause patch to run yum update-minimal instead."
-  default = true
+variable "windows_excludes" {
+  description = "Windows updates to exclude"
+  type        = list(string)
+  default     = []
 }
 
-variable "excludes" {
-  type = list(string)
-  description = "List of packages to exclude from update. These packages will be excluded."
-  default = null
+variable "windows_exclusive_patches" {
+  description = "Exclusive Windows patches to install"
+  type        = list(string)
+  default     = []
+}
+
+# YUM-specific variables (RHEL/CentOS)
+variable "yum_security" {
+  description = "Install security updates only"
+  type        = bool
+  default     = true
+}
+
+variable "yum_minimal" {
+  description = "Install minimal updates"
+  type        = bool
+  default     = false
+}
+
+variable "yum_excludes" {
+  description = "YUM packages to exclude"
+  type        = list(string)
+  default     = []
+}
+
+# APT-specific variables (Ubuntu/Debian)
+variable "apt_type" {
+  description = "APT update type (DIST, UPGRADE)"
+  type        = string
+  default     = "UPGRADE"
+}
+
+variable "apt_excludes" {
+  description = "APT packages to exclude"
+  type        = list(string)
+  default     = []
+}
+
+variable "apt_exclusive_packages" {
+  description = "Exclusive APT packages to install"
+  type        = list(string)
+  default     = []
+}
+
+# Zypper-specific variables (SUSE)
+variable "zypper_with_optional" {
+  description = "Install optional patches"
+  type        = bool
+  default     = false
+}
+
+variable "zypper_with_update" {
+  description = "Install recommended patches"
+  type        = bool
+  default     = true
+}
+
+variable "zypper_categories" {
+  description = "Zypper patch categories"
+  type        = list(string)
+  default     = []
+}
+
+variable "zypper_severities" {
+  description = "Zypper patch severities"
+  type        = list(string)
+  default     = []
+}
+
+variable "zypper_excludes" {
+  description = "Zypper packages to exclude"
+  type        = list(string)
+  default     = []
+}
+
+# Pre/Post step variables
+variable "pre_step_enabled" {
+  description = "Enable pre-patch step"
+  type        = bool
+  default     = false
+}
+
+variable "pre_step_script_path" {
+  description = "Path to pre-patch script"
+  type        = string
+  default     = ""
+}
+
+variable "pre_step_success_codes" {
+  description = "Allowed success codes for pre-patch step"
+  type        = list(number)
+  default     = [0]
+}
+
+variable "pre_step_interpreter" {
+  description = "Interpreter for pre-patch step"
+  type        = string
+  default     = "SHELL"
+}
+
+variable "post_step_enabled" {
+  description = "Enable post-patch step"
+  type        = bool
+  default     = false
+}
+
+variable "post_step_script_path" {
+  description = "Path to post-patch script"
+  type        = string
+  default     = ""
+}
+
+variable "post_step_success_codes" {
+  description = "Allowed success codes for post-patch step"
+  type        = list(number)
+  default     = [0]
+}
+
+variable "post_step_interpreter" {
+  description = "Interpreter for post-patch step"
+  type        = string
+  default     = "SHELL"
+}
+
+# Scheduling variables
+variable "schedule_type" {
+  description = "Schedule type (weekly, monthly)"
+  type        = string
+  default     = "weekly"
 }
 
 variable "time_zone" {
-  type = string
-  description = "Time zone for patch schedule"
-  default = "America/New_York"
+  description = "Time zone ID"
+  type        = string
+  default     = "UTC"
 }
 
 variable "hours" {
-  type = number
-  description = "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value 24:00:00 for scenarios like business closing time."
-  default = 5
+  description = "Hour of the day (0-23)"
+  type        = number
+  default     = 2
 }
 
 variable "minutes" {
-  type = number
-  description = "Minutes of hour of day. Must be from 0 to 59."
-  default = 0
+  description = "Minute of the hour (0-59)"
+  type        = number
+  default     = 0
 }
 
 variable "seconds" {
-  type = number
-  description = "Seconds of minutes of the time. Must normally be from 0 to 59."
-  default = 0
+  description = "Second of the minute (0-59)"
+  type        = number
+  default     = 0
 }
 
 variable "nanos" {
-  type = number
-  description = "Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999."
-  default = 0
+  description = "Nanoseconds"
+  type        = number
+  default     = 0
 }
 
 variable "day_of_week" {
-  type = string
-  description = "Day of the week patch schedule will run"
+  description = "Day of the week (MONDAY, TUESDAY, etc.)"
+  type        = string
+  default     = "SUNDAY"
 }
 
+variable "week_ordinal" {
+  description = "Week ordinal for monthly schedule (1-5, -1 for last week)"
+  type        = number
+  default     = 1
+}
+
+# Rollout variables
 variable "mode" {
-  type = string
-  description = "Mode of the patch rollout. Possible values are: ZONE_BY_ZONE, CONCURRENT_ZONES"
-  default = "CONCURRENT_ZONES"
+  description = "Rollout mode (ZONE_BY_ZONE, CONCURRENT_ZONES)"
+  type        = string
+  default     = "ZONE_BY_ZONE"
 }
 
 variable "percentage" {
-  type =  number
-  description = "Specifies the relative value defined as a percentage, which will be multiplied by a reference value"
-  default = 50
+  description = "Percentage of instances to patch concurrently"
+  type        = number
+  default     = 100
 }
