@@ -49,7 +49,7 @@ variable "windows_update_mode" {
 variable "windows_classifications" {
   description = "Windows update classifications (only used when windows_update_mode = 'classifications')"
   type        = list(string)
-  default     = ["CRITICAL", "SECURITY", "UPDATES"]
+  default     = ["CRITICAL", "SECURITY", "UPDATE"]
 }
 
 variable "windows_excludes" {
