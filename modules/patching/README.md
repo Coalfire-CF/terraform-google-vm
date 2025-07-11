@@ -9,16 +9,119 @@ This module is used to create a OS Patching Schedule for VMs based on a label fo
 The below example creates a OS Patching Schedule targeting RHEL8 VMs.
 
 ```hcl
+
+#Example: Basic RHEL Patch with defaults 
 module "rhel8_os_patching" {
-  source = "github.com/Coalfire-CF/terraform-google-vm//modules/patching"
-  project_id = "your-project-id"
+  source     = "github.com/Coalfire-CF/terraform-google-vm//modules/patching?ref=vX.X.X"
+  project_id = var.project_id
 
   patch_deployment_id = "rhel8-patching-schedule"
-  os_family = "rhel8"
-  zones = ["us-central1-a", "us-central1-b", "us-central1-c"]
-  day_of_week = "WEDNESDAY"
-
+  os_family           = "rhel8"
+  zones               = ["us-central1-a", "us-central1-b", "us-central1-c"]
+  day_of_week         = "WEDNESDAY"
+  yum_security        = true
+  yum_minimal         = true
 }
+
+# Example: Windows patch deployment with exclusive patches
+module "windows_os_patching" {
+  source     = "github.com/Coalfire-CF/terraform-google-vm//modules/patching?ref=vX.X.X"
+  project_id = var.project_id
+
+  patch_deployment_id     = "windows2022-patching-schedule"
+  os_family               = "windows2022"
+  zones                   = ["us-central1-a", "us-central1-b", "us-central1-c"]
+  
+  # Windows-specific settings - using exclusive patches mode
+  windows_update_mode       = "exclusive_patches"
+  windows_exclusive_patches = ["KB5012345", "KB5067890"]
+  
+  # Schedule for second Wednesday of each month
+  schedule_type = "monthly"
+  week_ordinal  = 2
+  day_of_week   = "WEDNESDAY"
+  hours         = 3
+  minutes       = 0
+  
+  # Rollout settings
+  mode       = "ZONE_BY_ZONE"
+  percentage = 50
+}
+
+# Example 4: Multi-OS deployment using for_each
+locals {
+  os_configs = {
+    windows = {
+      os_family               = "windows"
+      patch_deployment_id     = "windows-patches"
+      windows_update_mode     = "classifications"
+      windows_classifications = ["CRITICAL", "SECURITY"]
+      schedule_type          = "monthly"
+      week_ordinal           = 2
+      day_of_week            = "SUNDAY"
+      hours                  = 3
+    }
+    
+    rhel = {
+      os_family           = "rhel"
+      patch_deployment_id = "rhel-patches"
+      yum_security       = true
+      yum_minimal        = false
+      schedule_type      = "weekly"
+      day_of_week        = "SATURDAY"
+      hours              = 2
+    }
+    
+    ubuntu = {
+      os_family           = "ubuntu"
+      patch_deployment_id = "ubuntu-patches"
+      apt_type           = "UPGRADE"
+      schedule_type      = "weekly"
+      day_of_week        = "TUESDAY"
+      hours              = 1
+      reboot_config      = "NEVER"
+    }
+  }
+}
+
+module "multi_os_patches" {
+  source = "./modules/os-patch-deployment"
+  
+  for_each = local.os_configs
+  
+  project_id          = "my-project"
+  patch_deployment_id = each.value.patch_deployment_id
+  os_family          = each.value.os_family
+  zones              = ["us-central1-a", "us-central1-b"]
+  
+  # Windows settings
+  windows_update_mode     = lookup(each.value, "windows_update_mode", "classifications")
+  windows_classifications = lookup(each.value, "windows_classifications", ["CRITICAL", "SECURITY", "UPDATE"])
+  windows_excludes       = lookup(each.value, "windows_excludes", [])
+  windows_exclusive_patches = lookup(each.value, "windows_exclusive_patches", [])
+  
+  # RHEL/CentOS settings
+  yum_security = lookup(each.value, "yum_security", true)
+  yum_minimal  = lookup(each.value, "yum_minimal", false)
+  
+  # Ubuntu settings
+  apt_type = lookup(each.value, "apt_type", "UPGRADE")
+  
+  # Schedule settings
+  schedule_type = each.value.schedule_type
+  day_of_week   = each.value.day_of_week
+  hours         = each.value.hours
+  minutes       = lookup(each.value, "minutes", 0)
+  
+  # Optional settings
+  week_ordinal  = lookup(each.value, "week_ordinal", 1)
+  reboot_config = lookup(each.value, "reboot_config", "DEFAULT")
+  
+  # Rollout settings
+  mode       = lookup(each.value, "mode", "ZONE_BY_ZONE")
+  percentage = lookup(each.value, "percentage", 100)
+}
+
 ```
 
 <!-- BEGIN_TF_DOCS -->
