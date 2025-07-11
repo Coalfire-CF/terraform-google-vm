@@ -19,9 +19,10 @@ resource "google_os_config_patch_deployment" "os_patch" {
     dynamic "windows_update" {
       for_each = var.os_family == "windows2022" || var.os_family == "windows" ? [1] : []
       content {
-        classifications = var.windows_classifications
-        excludes        = var.windows_excludes
-        exclusive_patches = var.windows_exclusive_patches
+        # Only one of these can be specified at a time
+        classifications   = var.windows_update_mode == "classifications" ? var.windows_classifications : null
+        excludes         = var.windows_update_mode == "excludes" ? var.windows_excludes : null
+        exclusive_patches = var.windows_update_mode == "exclusive_patches" ? var.windows_exclusive_patches : null
       }
     }
     

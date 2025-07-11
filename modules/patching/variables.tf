@@ -36,20 +36,30 @@ variable "reboot_config" {
 }
 
 # Windows-specific variables
+variable "windows_update_mode" {
+  description = "Windows update mode (classifications, excludes, or exclusive_patches)"
+  type        = string
+  default     = "classifications"
+  validation {
+    condition = contains(["classifications", "excludes", "exclusive_patches"], var.windows_update_mode)
+    error_message = "Windows update mode must be one of: classifications, excludes, exclusive_patches."
+  }
+}
+
 variable "windows_classifications" {
-  description = "Windows update classifications"
+  description = "Windows update classifications (only used when windows_update_mode = 'classifications')"
   type        = list(string)
   default     = ["CRITICAL", "SECURITY", "UPDATES"]
 }
 
 variable "windows_excludes" {
-  description = "Windows updates to exclude"
+  description = "Windows updates to exclude (only used when windows_update_mode = 'excludes')"
   type        = list(string)
   default     = []
 }
 
 variable "windows_exclusive_patches" {
-  description = "Exclusive Windows patches to install"
+  description = "Exclusive Windows patches to install (only used when windows_update_mode = 'exclusive_patches')"
   type        = list(string)
   default     = []
 }
