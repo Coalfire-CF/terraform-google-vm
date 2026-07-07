@@ -130,3 +130,29 @@ No modules.
 | <a name="output_tags"></a> [tags](#output\_tags) | Tags that will be associated with the instance. |
 | <a name="output_zone"></a> [zone](#output\_zone) | Zone that the instance is located in. |
 <!-- END_TF_DOCS -->
+## Tree
+
+```text
+.
+|-- CHANGELOG.md
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- README.md
+|-- coalfire_logo.png
+|-- iam.tf
+|-- main.tf
+|-- modules
+|   |-- patching
+|   |   |-- README.md
+|   |   |-- main.tf
+|   |   |-- outputs.tf
+|   |   |-- variables.tf
+|   |-- snapshot
+|       |-- README.md
+|       |-- main.tf
+|       |-- outputs.tf
+|       |-- variables.tf
+|-- outputs.tf
+|-- release-please-config.json
+|-- variables.tf
+```
