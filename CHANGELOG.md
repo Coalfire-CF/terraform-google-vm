@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.1.1](https://github.com/Coalfire-CF/terraform-google-vm/compare/v1.1.0...v1.1.1) (2026-08-17)
+
+
+### Bug Fixes
+
+* **release:** pass secrets to org-release (App token for release-please) ([#44](https://github.com/Coalfire-CF/terraform-google-vm/issues/44)) ([173108a](https://github.com/Coalfire-CF/terraform-google-vm/commit/173108a7b6f8da758dddf16c611c867ec308e425))
+
+
+### Miscellaneous
+
+* adopt Actions v0.12.1 (bypass auto-merge + event-driven re-merge) ([5c49fd0](https://github.com/Coalfire-CF/terraform-google-vm/commit/5c49fd06e41e7529c15d80f9329b42203597ee74))
+* **ci:** adopt Coalfire-CF/Actions v0.11.3 ([#42](https://github.com/Coalfire-CF/terraform-google-vm/issues/42)) ([abccfd4](https://github.com/Coalfire-CF/terraform-google-vm/commit/abccfd49b43fefaf83a01615bfa7dc927d1d0cba))
+* **deps:** bump actions/github-script from 8 to 9 ([#41](https://github.com/Coalfire-CF/terraform-google-vm/issues/41)) ([6dcd630](https://github.com/Coalfire-CF/terraform-google-vm/commit/6dcd630431f6a8ff7272436427fd31bfd0976c3d))
+* **deps:** bump the org-actions group with 10 updates ([#46](https://github.com/Coalfire-CF/terraform-google-vm/issues/46)) ([aaa2ffc](https://github.com/Coalfire-CF/terraform-google-vm/commit/aaa2ffc265a2abe76a067c8b0280acfeecaa56c2))
+* **deps:** bump the org-actions group with 10 updates ([#47](https://github.com/Coalfire-CF/terraform-google-vm/issues/47)) ([b9f8243](https://github.com/Coalfire-CF/terraform-google-vm/commit/b9f824387b5aae3dbe58f1140f697bf562960d00))
+* **deps:** bump the org-actions group with 10 updates ([#48](https://github.com/Coalfire-CF/terraform-google-vm/issues/48)) ([d285359](https://github.com/Coalfire-CF/terraform-google-vm/commit/d2853595e74686c0426af65b8f53eb040ffa2193))
+* **deps:** bump the org-actions group with 9 updates ([#45](https://github.com/Coalfire-CF/terraform-google-vm/issues/45)) ([2a800c8](https://github.com/Coalfire-CF/terraform-google-vm/commit/2a800c8c42510bc10b82fa2bf818f3c580e312d2))
+* **deps:** bump the org-actions group with 9 updates ([#51](https://github.com/Coalfire-CF/terraform-google-vm/issues/51)) ([a8bcb67](https://github.com/Coalfire-CF/terraform-google-vm/commit/a8bcb6716aefbb0bd86353080b1d80d96624025e))
+* **deps:** bump the org-actions group with 9 updates ([#52](https://github.com/Coalfire-CF/terraform-google-vm/issues/52)) ([3a82523](https://github.com/Coalfire-CF/terraform-google-vm/commit/3a82523c9afb5821ff74780d3f0e638a32e9bfe7))
+* **docs:** generate README from _header.md and _footer.md ([#53](https://github.com/Coalfire-CF/terraform-google-vm/issues/53)) ([b7f158c](https://github.com/Coalfire-CF/terraform-google-vm/commit/b7f158c631ede764795a1c584b540f3f4df4e27a))
+* retire org-tree-readme ([#49](https://github.com/Coalfire-CF/terraform-google-vm/issues/49)) ([5d2b77a](https://github.com/Coalfire-CF/terraform-google-vm/commit/5d2b77a8895357afa969f6d16c37a446b08f2894))
+
 ## [1.1.0](https://github.com/Coalfire-CF/terraform-google-vm/compare/v1.0.8...v1.1.0) (2026-07-05)
 
 
