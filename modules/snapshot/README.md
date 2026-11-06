@@ -24,7 +24,8 @@ module "linux_bastion" {
 }
 ```
 
-To assign the snapshot schedule to a VM, use the `self_link` output from this module and pass that into the `snapshot_schedule` variable of the VM module.
+To assign the snapshot schedule to a VM, use the `self_link` output from this module and pass that into the
+`snapshot_schedule` variable of the VM module.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -32,6 +33,8 @@ To assign the snapshot schedule to a VM, use the `self_link` output from this mo
 No requirements.
 
 ## Providers
+
+<!-- markdownlint-disable MD033 -->
 
 | Name | Version |
 |------|---------|
@@ -71,3 +74,5 @@ No modules.
 | <a name="output_policy"></a> [policy](#output\_policy) | Resource snapshot policy details. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | Resource snapshot self-link. |
 <!-- END_TF_DOCS -->
+
+<!-- markdownlint-enable MD033 -->
